@@ -16,22 +16,29 @@ bot = commands.Bot(command_prefix='&',intents=intents)
 async def on_ready():
     print('>> {0.user} 已成功載入。 <<'.format(bot))
 
+#load 
+
 @bot.command()
 async def load(ctx,extension):
-    bot.load_extension(f'cmds.{extension}')
+    await bot.load_extension(f'cmds.{extension}')
     await ctx.send(f'{extension} is loaded.')
+
+#unload
 
 @bot.command()
 async def unload(ctx,extension):
-    bot.unload_extension(f'cmds.{extension}')
+    await bot.unload_extension(f'cmds.{extension}')
     await ctx.send(f'{extension} is unloaded.')
+
+#reload
 
 @bot.command()
 async def reload(ctx,extension):
-    bot.reload_extension(f'cmds.{extension}')
+    await bot.reload_extension(f'cmds.{extension}')
     await ctx.send(f'{extension} is reloaded.')
 
 #search file in cmds
+
 async def load_extensions():
     for filename in os.listdir('./cmds'):
         print(filename)

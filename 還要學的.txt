@@ -1,3 +1,4 @@
 Python Class和Cog的使用
 os模組的應用
 __init__ , __main__ , __name__ 等等...
+async, await
