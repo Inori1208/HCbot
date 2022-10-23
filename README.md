@@ -15,5 +15,7 @@
 ## alpha2.2 2022/10/21
     Adding time_task, a function working on background.
     Also the settime command, using the messages bot got, change the "time" section in the json file.
+## alpha2.3 2022/10/23
+    Use datetime module to set a timer, which will tell everyone in the channel how many days left before the exam.
 
 

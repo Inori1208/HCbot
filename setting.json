@@ -1,5 +1,14 @@
 {
     "TOKEN": "MTAyODY4OTEyNDA5NTQzNDc1Mg.G4zOyC.chsO03Opgpfihs-B0S4O4KvqyOeuGSahQ7VTto",
     "Bot_channel": "1025052102063554580",
-    "time": "2232"
+    "time": "2232",
+    "now_year": "2022",
+    "now_month": "10",
+    "now_day": "23",
+    "exam1": {
+        "year": 2023,
+        "month": 1,
+        "day": 13
+    },
+    "d_days": 82
 }
