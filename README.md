@@ -16,6 +16,9 @@
     Adding time_task, a function working on background.
     Also the settime command, using the messages bot got, change the "time" section in the json file.
 ## alpha2.3 2022/10/23
-    Use datetime module to set a timer, which will tell everyone in the channel how many days left before the exam.
-
+    Use datetime module to set a auto timer, which will tell everyone in the channel how many days left before the exam every day.
+    Also add a command which will do the same thing but we can check it whenever we want.
+## alpha2.4.0 2022/10/27
+    Trying to make a simple game, still don't have any idea, but I had successfully done a sign up command.
+    Also making a calendar at the same time, still working on it.
 
