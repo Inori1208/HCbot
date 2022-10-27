@@ -19,6 +19,6 @@
     Use datetime module to set a auto timer, which will tell everyone in the channel how many days left before the exam every day.
     Also add a command which will do the same thing but we can check it whenever we want.
 ## alpha2.4.0 2022/10/27
-    Trying to make a simple game, still don't have any idea, but I had successfully done a sign up command.
+    Trying to make a simple game, still don't have any idea, but I had successfully done a sign up command. 
     Also making a calendar at the same time, still working on it.
 
