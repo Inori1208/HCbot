@@ -22,6 +22,13 @@ class Main(Cog_Extension):
         await ctx.send(f'距離學測還有{d}天')
 
     @commands.command()
+    async def cat(self,ctx):
+        with open('setting.json','r',encoding='utf8') as jfile:
+            jdata = json.load(jfile)
+            vid = jdata['catvideo']
+        await ctx.send(vid)
+
+    @commands.command()
     async def 重要日期(self,ctx,page:int=0):
         if page == 0 or page == 1:
             embed=discord.Embed(title='重要日期', description='目前有列出的重要日期', color=0xb8f7ff, timestamp=datetime.datetime.now())

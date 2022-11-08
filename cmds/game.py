@@ -14,12 +14,20 @@ class Game(Cog_Extension):
 
     @commands.command()
     async def signup(self,ctx):
+
         self.player = str(ctx.author)
         cplayers = list(playerdata["players"])
+        playercount = len(cplayers)
         if self.player not in cplayers:
             cplayers.append(self.player)
-            print(cplayers)
+            #print(cplayers)
             playerdata["players"] = cplayers
+            playercount += 1
+            #print(playercount)
+            playerdata[f"player{playercount}"] = {'ID':'','balance':''}#建立新player data
+            cpdata = playerdata[f"player{playercount}"]
+            cpdata["ID"] = self.player[:-5]
+            cpdata["balance"] = 100
             with open('playerdata.json','w',encoding='utf8') as jfile:
                 json.dump(playerdata, jfile,indent=4)
             await ctx.send(f"{self.player[:-5]} ,歡迎加入遊戲")
