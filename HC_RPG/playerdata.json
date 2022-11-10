@@ -1,0 +1,37 @@
+{
+    "players": [
+        "xX\u80fd\u91cfXx#4530",
+        "\u78b3\u70e4\u68c9\u82b1\u7cd6#7023",
+        "\u767d\u9b3c\u9280\u6708#5047"
+    ],
+    "player1": {
+        "ID": "xX\u80fd\u91cfXx",
+        "balance": 100,
+        "LVL": 1,
+        "items":{
+            "weapon":1,
+            "axe":2,
+            "pickaxe":3
+        }
+    },
+    "player2": {
+        "ID": "\u78b3\u70e4\u68c9\u82b1\u7cd6",
+        "balance": 100,
+        "LVL": 1,
+        "items":{
+            "weapon":1,
+            "axe":2,
+            "pickaxe":3
+        }
+    },
+    "player3": {
+        "ID": "\u767d\u9b3c\u9280\u6708",
+        "balance": 100,
+        "LVL": 1,
+        "items":{
+            "weapon":1,
+            "axe":2,
+            "pickaxe":3
+        }
+    }
+}
