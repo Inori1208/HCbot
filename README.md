@@ -27,3 +27,5 @@
 ## alpha2.6 2022/11/10
     Having some ideas in my game, added the backpack system which was included in playerdata.
     Also added a command to let user check their backpack. 
+## alpha2.6.1 2022/11/11~18
+    想更新的東西太多，先存這些檔案。

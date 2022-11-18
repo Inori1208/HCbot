@@ -14,6 +14,11 @@ class Event(Cog_Extension):
         if msg.content in GoodNight_kws and msg.author != self.bot.user:
             await msg.channel.send('晚安')
 
+    @commands.Cog.listener()
+    async def on_raw_reaction_add(self,rdata):
+        print(rdata.emoji)
+        print(rdata.member)
+
 
 async def setup(bot):
     await bot.add_cog(Event(bot))

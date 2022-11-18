@@ -2,36 +2,126 @@
     "players": [
         "xX\u80fd\u91cfXx#4530",
         "\u78b3\u70e4\u68c9\u82b1\u7cd6#7023",
-        "\u767d\u9b3c\u9280\u6708#5047"
+        "\u767d\u9b3c\u9280\u6708#5047",
+        "JamesLin#9604",
+        "eason#7695"
     ],
     "player1": {
         "ID": "xX\u80fd\u91cfXx",
         "balance": 100,
         "LVL": 1,
-        "items":{
-            "weapon":1,
-            "axe":2,
-            "pickaxe":3
+        "items": {
+            "weapon": {
+                "item_id": 1,
+                "count": 1
+            },
+            "axe": {
+                "item_id": 2,
+                "count": 1
+            },
+            "pickaxe": {
+                "item_id": 3,
+                "count": 1
+            },
+            "other": {
+                "slot0": {
+                    "item_id": 5,
+                    "count": 20
+                },
+                "slot1": {
+                    "item_id": 4,
+                    "count": 1
+                },
+                "slot2": {
+                    "item_id": 6,
+                    "count": 1
+                }
+            }
         }
     },
     "player2": {
         "ID": "\u78b3\u70e4\u68c9\u82b1\u7cd6",
         "balance": 100,
         "LVL": 1,
-        "items":{
-            "weapon":1,
-            "axe":2,
-            "pickaxe":3
+        "items": {
+            "weapon": {
+                "item_id": 1,
+                "count": 1
+            },
+            "axe": {
+                "item_id": 2,
+                "count": 1
+            },
+            "pickaxe": {
+                "item_id": 3,
+                "count": 1
+            },
+            "other": {}
         }
     },
     "player3": {
         "ID": "\u767d\u9b3c\u9280\u6708",
         "balance": 100,
         "LVL": 1,
-        "items":{
-            "weapon":1,
-            "axe":2,
-            "pickaxe":3
+        "items": {
+            "weapon": {
+                "item_id": 1,
+                "count": 1
+            },
+            "axe": {
+                "item_id": 2,
+                "count": 1
+            },
+            "pickaxe": {
+                "item_id": 3,
+                "count": 1
+            },
+            "other": {
+                "slot0": {
+                    "item_id": 6,
+                    "count": 1
+                }
+            }
+        }
+    },
+    "player4": {
+        "ID": "JamesLin",
+        "balance": 100,
+        "LVL": 1,
+        "items": {
+            "weapon": {
+                "item_id": 1,
+                "count": 1
+            },
+            "axe": {
+                "item_id": 2,
+                "count": 1
+            },
+            "pickaxe": {
+                "item_id": 3,
+                "count": 1
+            },
+            "other": {}
+        }
+    },
+    "player5": {
+        "ID": "eason",
+        "balance": 100,
+        "LVL": 1,
+        "items": {
+            "weapon": {
+                "item_id": 1,
+                "count": 1
+            },
+            "axe": {
+                "item_id": 2,
+                "count": 1
+            },
+            "pickaxe": {
+                "item_id": 3,
+                "count": 1
+            },
+            "other": {}
         }
     }
 }

@@ -1,5 +1,29 @@
 {
-    "1":"初始之刃",
-    "2":"普通的木斧",
-    "3":"破舊的十字鎬"
+    "0":"",
+    "1":{
+        "name":"初始之刃",
+        "type":"weapon",
+        "atk":10
+        },
+    "2":{
+        "name":"普通的木斧",
+        "type":"axe"
+        },
+    "3":{
+        "name":"破舊的十字鎬",
+        "type":"pickaxe"
+        },
+    "4":{
+        "name":"白刃",
+        "type":"weapon",
+        "atk":20
+        },
+    "5":{
+        "name":"碎石",
+        "type":"sundries"
+        },
+    "6":{
+        "name":"JamesLin的雕像",
+        "type":"sundries"
+        }
 }
