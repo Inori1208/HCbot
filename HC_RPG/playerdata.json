@@ -10,9 +10,10 @@
         "ID": "xX\u80fd\u91cfXx",
         "balance": 100,
         "LVL": 1,
+        "health":20,
         "items": {
             "weapon": {
-                "item_id": 1,
+                "item_id": 4,
                 "count": 1
             },
             "axe": {
@@ -43,6 +44,7 @@
         "ID": "\u78b3\u70e4\u68c9\u82b1\u7cd6",
         "balance": 100,
         "LVL": 1,
+        "health":20,
         "items": {
             "weapon": {
                 "item_id": 1,
@@ -63,6 +65,7 @@
         "ID": "\u767d\u9b3c\u9280\u6708",
         "balance": 100,
         "LVL": 1,
+        "health":20,
         "items": {
             "weapon": {
                 "item_id": 1,
@@ -88,6 +91,7 @@
         "ID": "JamesLin",
         "balance": 100,
         "LVL": 1,
+        "health":20,
         "items": {
             "weapon": {
                 "item_id": 1,
@@ -108,6 +112,7 @@
         "ID": "eason",
         "balance": 100,
         "LVL": 1,
+        "health":20,
         "items": {
             "weapon": {
                 "item_id": 1,
