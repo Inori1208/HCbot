@@ -7,11 +7,13 @@
         },
     "2":{
         "name":"普通的木斧",
-        "type":"axe"
+        "type":"axe",
+        "collect_rate":10
         },
     "3":{
         "name":"破舊的十字鎬",
-        "type":"pickaxe"
+        "type":"pickaxe",
+        "collect_rate":10
         },
     "4":{
         "name":"騎士細劍",
@@ -25,5 +27,9 @@
     "6":{
         "name":"JamesLin的雕像",
         "type":"sundries"
-        }
+        },
+    "7":{
+        "name":"Yee的雕像",
+        "type":"sundries"
+    }
 }

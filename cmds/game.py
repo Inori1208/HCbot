@@ -13,8 +13,10 @@ with open('HC_RPG\\bossdata.json','r',encoding='utf8') as jfile:
     bossdata = json.load(jfile)
 
 def check(player):#確認玩家是否在遊戲中,並取得該玩家總資料
+    print(player)
     cplayer = list(playerdata["players"])
-    if player in cplayer:
+    print(cplayer)
+    if f'{player}' in cplayer:
         cp_num = cplayer.index(f'{player}') + 1
         cp_data = playerdata[f"player{cp_num}"]#該玩家總資料
         return(cp_data)
@@ -74,10 +76,12 @@ class Game(Cog_Extension):
 
     @hc.command()
     async def backpack(self,ctx):
+        #print('test')
         self.player = str(ctx.author)
         cplayer = list(playerdata["players"])
         if self.player in cplayer:
-            await bp(ctx,cplayer,'others')
+            #print('test2')
+            await bp(ctx,cplayer,'all')
         else:
             await ctx.send(f"{self.player[:-5]}你不在遊戲內")
             await ctx.send("使用指令&signup加入遊戲吧！")
@@ -93,6 +97,34 @@ class Game(Cog_Extension):
             await asyncio.sleep(.5)
             thinkmsg = await thinkmsg.edit(content="思考ing")
         await thinkmsg.delete()
+
+    @hc.command()
+    async def mine(self,ctx):
+        print('1')
+        print(ctx.author)
+        cp_data = check(ctx.author)
+        print(cp_data)
+        cap = itemdata[f"{cp_data['items']['pickaxe']['item_id']}"]["collect_rate"]
+        print(cap)
+        #中間計算採集量
+        quan = cap
+        cother = dict(cp_data['items']['other'])
+        print(cother)
+        for i in cother:
+            if cother[f'{i}']['item_id'] == 5:
+                cother[f'{i}']['count'] += quan
+                break
+            elif i == f'slot{len(cother)-1}':
+                print(len(cother))
+                cp_data['items']['other'][f'slot{len(cother)}'] ={
+                    "item_id": 5,
+                    "count": quan
+                }
+                break
+        print(cp_data)
+        with open('HC_RPG\\playerdata.json','w',encoding='utf8') as jfile:
+                    json.dump(playerdata, jfile,indent=4)
+        await ctx.send('測試成功')
 
     @hc.command()
     async def boss(self,ctx,ID):
@@ -113,39 +145,54 @@ class Game(Cog_Extension):
             plevel = cp_data['LVL']
             #發送
             msg = await ctx.send(f"**{bossname}[Lv {bosslevel}]**\n血量:[■■■■■■■■■■■■■■■■■■■■]({bosshealth}/{bosshealth})",file=bosspic)
+            ch = msg.channel
             await asyncio.sleep(1)
             round_msg = await ctx.send(f"現在是{ctx.author.mention}的回合\n血量:[■■■■■■■■■■■■■■■■■■■■]({phealth}/{phealth})")
             #給予初始值
             round = "p"
+            x = 0
             bnowhealth = bosshealth
+            pnowhealth = phealth
             #print(round)
-            while bnowhealth > 0 and phealth > 0:#沒有人死掉->執行
-                print('test2')
-                while phealth > 0 and round == "p":
-                    print('test1')
+            while bnowhealth > 0 and pnowhealth > 0:#沒有人死掉->執行
+                #print('test2')
+                while pnowhealth > 0 and round == "p":
+                    #print('test1')
                     bnowhealth = await battle(ctx,cp_data,msg,self.bot,bnowhealth)
                     print(bnowhealth)
                     round = "b"
-                    print(round)
+                    #print(round)
                     await asyncio.sleep(1)
-                    print(msg)
+                    #print(msg)
                     msg = await msg.edit(content = f"**{bossname}[Lv {bosslevel}]**\n血量:[■■■■■■■■■■■■■■■■■■■■]({bnowhealth}/{bosshealth})")
                     await asyncio.sleep(1)
-                    round_msg = await round_msg.edit(content = f"現在是**{bossname}**的回合\n玩家血量:[■■■■■■■■■■■■■■■■■■■■]({phealth}/{phealth})")
+                    round_msg = await round_msg.edit(content = f"現在是**{bossname}**的回合\n玩家血量:[■■■■■■■■■■■■■■■■■■■■]({pnowhealth}/{phealth})")
                     break
                 while bnowhealth > 0 and round == "b":
                     round = "p"
                     await asyncio.sleep(1)
                     msg = await msg.edit(content = f"**{bossname}[Lv {bosslevel}]**\n血量:[■■■■■■■■■■■■■■■■■■■■]({bnowhealth}/{bosshealth})")
                     await asyncio.sleep(1)
-                    tmsg = await ctx.send('boss還不會打架(´・ω・`)')
-                    await asyncio.sleep(5)
-                    await tmsg.delete()
+                    await ctx.send('boss會打架惹\n而且一次打五下(´・ω・`)')
                     await asyncio.sleep(1)
-                    round_msg = await round_msg.edit(content = f"現在是{ctx.author.mention}的回合\n玩家血量:[■■■■■■■■■■■■■■■■■■■■]({phealth}/{phealth})")
+                    for i in range(5):
+                        await ctx.send('請在 **5** 秒內打出 "a"')
+                        x = await listen(ctx,'a',self.bot,x)
+                        await asyncio.sleep(1)
+                    await ctx.send(f'倍率為{x}')
+                    pnowhealth -= bossatk/5000*x
+                    x=0
+                    await asyncio.sleep(1)
+                    await ch.purge(limit = 2)
+                    await asyncio.sleep(1)
+                    round_msg = await round_msg.edit(content = f"現在是{ctx.author.mention}的回合\n玩家血量:[■■■■■■■■■■■■■■■■■■■■]({pnowhealth}/{phealth})")
                     break
             print('戰鬥結束')
-            round_msg = await round_msg.edit(content = f"{ctx.author.mention} 你打敗了**{bossname}**!")
+            await msg.delete()
+            if bnowhealth<=0:
+                round_msg = await round_msg.edit(content = f"{ctx.author.mention} 你打敗了 **{bossname}** !")
+            else:
+                round_msg = await round_msg.edit(content = f"{ctx.author.mention} 你死了:3") 
 
 #攻擊函式     
 async def startatk(msg,user,cp_data,bnowhealth):
@@ -163,7 +210,7 @@ async def startatk(msg,user,cp_data,bnowhealth):
 
 
 #背包函式
-async def bp(ctx,cplayer,type):
+async def bp(ctx,cplayer,type:str):
     cp_num = cplayer.index(f'{ctx.author}') + 1 #玩家編號
     cp_data = playerdata[f"player{cp_num}"] #取得玩家總資料
     bp = dict(cp_data["items"]) #取得玩家背包資料
@@ -204,7 +251,7 @@ async def bp(ctx,cplayer,type):
 async def battle(ctx,cp_data,msg,bot,bnowhealth): 
     
     cplayer = list(playerdata["players"])
-    print('test')
+    #print('test')
     await msg.add_reaction('⚔️')
     await asyncio.sleep(1)
     await msg.add_reaction('📂')
@@ -225,10 +272,10 @@ async def battle(ctx,cp_data,msg,bot,bnowhealth):
         if str(reaction) == '📂':
             #await ctx.send('測試成功3')
             msg2 = await ctx.send(await bp(ctx,cplayer,"others"))
-            await asyncio.sleep(60)
+            await asyncio.sleep(5)
             await msg.clear_reactions()
             await msg2.delete()
-            break
+            return(bnowhealth)
         try:
             reaction, user = await bot.wait_for('reaction_add', timeout=60.0, check=c)
         except asyncio.TimeoutError:
@@ -236,10 +283,33 @@ async def battle(ctx,cp_data,msg,bot,bnowhealth):
             await msg.clear_reactions()
             break
 
-    
-                    
-
-
+#擷取玩家對話
+async def listen(ctx,word:str,bot,count):
+    #print('test2')
+    print(word)
+    def c(msg):
+        return msg.channel == ctx.channel and msg.author == ctx.author
+    while  True:
+        #print('test3')
+        try:
+            #print('test')
+            m = await bot.wait_for('message',timeout = 5.0,check=c)
+            print(m)
+        except asyncio.TimeoutError:
+            #await ctx.send("測試成功")
+            await ctx.channel.purge(limit = 1)
+            count += 1
+            return(count)
+        if m.content == f'{word}':
+            print('test1')
+            await ctx.channel.purge(limit = 2)
+            return(count)
+        #print('test5')
+        if m.content != f'{word}':
+            await ctx.channel.purge(limit = 2)
+            count += 1
+            return(count)
+        #print('test4')
 
 
 async def setup(bot):
