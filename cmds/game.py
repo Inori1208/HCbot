@@ -4,6 +4,8 @@ from discord.ext import commands
 from core.classes import Cog_Extension
 import json
 import asyncio
+import random
+import string
 
 with open('HC_RPG\\playerdata.json','r',encoding='utf8') as jfile:
     playerdata = json.load(jfile)
@@ -11,6 +13,8 @@ with open('HC_RPG\\itemdata.json','r',encoding='utf8') as jfile:
     itemdata = json.load(jfile)
 with open('HC_RPG\\bossdata.json','r',encoding='utf8') as jfile:
     bossdata = json.load(jfile)
+with open('HC_RPG\\rpg_setting.json','r',encoding='utf8') as jfile:
+    rpgset = json.load(jfile)
 
 def check(player):#確認玩家是否在遊戲中,並取得該玩家總資料
     print(player)
@@ -19,6 +23,7 @@ def check(player):#確認玩家是否在遊戲中,並取得該玩家總資料
     if f'{player}' in cplayer:
         cp_num = cplayer.index(f'{player}') + 1
         cp_data = playerdata[f"player{cp_num}"]#該玩家總資料
+        print("yes")
         return(cp_data)
     else:
         return 0 
@@ -162,22 +167,26 @@ class Game(Cog_Extension):
                     print(bnowhealth)
                     round = "b"
                     #print(round)
+                    Boss_Health_point = await HEALTH_POINT(bosshealth,bnowhealth)
+                    Player_Health_point = await HEALTH_POINT(phealth,pnowhealth)
                     await asyncio.sleep(1)
                     #print(msg)
-                    msg = await msg.edit(content = f"**{bossname}[Lv {bosslevel}]**\n血量:[■■■■■■■■■■■■■■■■■■■■]({bnowhealth}/{bosshealth})")
+                    msg = await msg.edit(content = f"**{bossname}[Lv {bosslevel}]**\n血量:[{Boss_Health_point}]({bnowhealth}/{bosshealth})")
                     await asyncio.sleep(1)
-                    round_msg = await round_msg.edit(content = f"現在是**{bossname}**的回合\n玩家血量:[■■■■■■■■■■■■■■■■■■■■]({pnowhealth}/{phealth})")
+                    round_msg = await round_msg.edit(content = f"現在是**{bossname}**的回合\n玩家血量:[{Player_Health_point}]({pnowhealth}/{phealth})")
                     break
                 while bnowhealth > 0 and round == "b":
                     round = "p"
                     await asyncio.sleep(1)
-                    msg = await msg.edit(content = f"**{bossname}[Lv {bosslevel}]**\n血量:[■■■■■■■■■■■■■■■■■■■■]({bnowhealth}/{bosshealth})")
+                    Boss_Health_point = await HEALTH_POINT(bosshealth,bnowhealth)
+                    msg = await msg.edit(content = f"**{bossname}[Lv {bosslevel}]**\n血量:[{Boss_Health_point}]({bnowhealth}/{bosshealth})")
                     await asyncio.sleep(1)
                     await ctx.send('boss會打架惹\n而且一次打五下(´・ω・`)')
                     await asyncio.sleep(1)
                     for i in range(5):
-                        await ctx.send('請在 **5** 秒內打出 "a"')
-                        x = await listen(ctx,'a',self.bot,x)
+                        alphabet = random.choice(list(string.ascii_letters))
+                        await ctx.send(f'請在 **5** 秒內打出 "{alphabet}"')
+                        x = await listen(ctx,f'{alphabet}',self.bot,x,'ATK')
                         await asyncio.sleep(1)
                     await ctx.send(f'倍率為{x}')
                     pnowhealth -= bossatk/5000*x
@@ -185,7 +194,8 @@ class Game(Cog_Extension):
                     await asyncio.sleep(1)
                     await ch.purge(limit = 2)
                     await asyncio.sleep(1)
-                    round_msg = await round_msg.edit(content = f"現在是{ctx.author.mention}的回合\n玩家血量:[■■■■■■■■■■■■■■■■■■■■]({pnowhealth}/{phealth})")
+                    Player_Health_point = await HEALTH_POINT(phealth,pnowhealth)
+                    round_msg = await round_msg.edit(content = f"現在是{ctx.author.mention}的回合\n玩家血量:[{Player_Health_point}]({pnowhealth}/{phealth})")
                     break
             print('戰鬥結束')
             await msg.delete()
@@ -284,7 +294,7 @@ async def battle(ctx,cp_data,msg,bot,bnowhealth):
             break
 
 #擷取玩家對話
-async def listen(ctx,word:str,bot,count):
+async def listen(ctx,word:str,bot,count,mode:str):
     #print('test2')
     print(word)
     def c(msg):
@@ -300,17 +310,27 @@ async def listen(ctx,word:str,bot,count):
             await ctx.channel.purge(limit = 1)
             count += 1
             return(count)
-        if m.content == f'{word}':
+        if m.content == f'{word}' and mode == 'ATK':
             print('test1')
             await ctx.channel.purge(limit = 2)
             return(count)
         #print('test5')
-        if m.content != f'{word}':
+        if m.content != f'{word}' and mode == 'ATK':
             await ctx.channel.purge(limit = 2)
             count += 1
             return(count)
         #print('test4')
 
+#寫出血量
+async def HEALTH_POINT(health,nowhealth):
+    standard_point = health/20
+    block = round(nowhealth/standard_point)
+    Health_point = rpgset[f'HP_{block}']
+    if block < 1 and block > 0:
+        Health_point = str(rpgset['HP_1'])
+    elif block <= 0:
+        Health_point = str(rpgset['HP_0'])
+    return(Health_point)
 
 async def setup(bot):
     await bot.add_cog(Game(bot))

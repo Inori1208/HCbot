@@ -31,5 +31,9 @@
     "7":{
         "name":"Yee的雕像",
         "type":"sundries"
+    },
+    "8":{
+        "name":"回復藥水(I)",
+        "type":"potion"
     }
 }

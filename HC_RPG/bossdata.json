@@ -4,6 +4,6 @@
         "LVL":99,
         "Health":100000,
         "ATK":10000,
-        "pic":"C:\\Users\\洪宸\\Desktop\\HCbot\\HC_RPG\\boss_image\\1.png"
+        "pic":"./HC_RPG\\boss_image\\1.png"
     }
 }
